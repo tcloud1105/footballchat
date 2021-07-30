@@ -22,6 +22,8 @@ container.resolve(function(users){
         users.setRouting(router);
     
         app.use(router);
+        
+        
     }
     
     
