@@ -1,0 +1,19 @@
+{
+  "name": "footballchat",
+  "version": "1.0.0",
+  "description": "Football chat App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tcloud1105/footballchat.git"
+  },
+  "author": "Kayim Fotso Savinien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tcloud1105/footballchat/issues"
+  },
+  "homepage": "https://github.com/tcloud1105/footballchat#readme"
+}
