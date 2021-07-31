@@ -7,7 +7,8 @@ const validator = require('express-validator');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-const flash require('flash');
+const flash = require('flash');
+const passport = require('passport');
 
 
 const container = require('./container');
@@ -55,6 +56,8 @@ container.resolve(function(users){
         }))
         
         app.use(flash());
+        app.use(passport.initialize());
+        app.use(passport.session());
     }
 });
 
