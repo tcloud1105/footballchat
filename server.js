@@ -14,8 +14,8 @@ const passport = require('passport');
 const container = require('./container');
 
 container.resolve(function(users){
-    //mongoose.Promise = global.Promise;
-   // mongoose.connect('mongodb://localhost:27017/footballchat');
+    mongoose.Promise = global.Promise;
+   mongoose.connect('mongodb://localhost:27017/footballchat');
     //mongoose.connect('mongodb://localhost:27017/footballchat',{useMongoClient:true});
     
    const app = setUpExpress(); 
@@ -49,12 +49,12 @@ container.resolve(function(users){
         app.use(bodyParser.urlencoded({extended:true}));
         
         
-//        app.use(session({
-//            secret:'thisisasecretkey',
-//            resave:true,
-//            saveInitialized:true,
-//            store: new MongoStore({mongooseConnection:mongoose.connection})
-//        }))
+        app.use(session({
+            secret:'thisisasecretkey',
+            resave:true,
+            saveInitialized:true,
+            store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/footballchat' })
+        }))
         
         app.use(flash());
         app.use(passport.initialize());
