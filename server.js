@@ -13,7 +13,7 @@ const passport = require('passport');
 
 const container = require('./container');
 
-container.resolve(function(users){
+container.resolve(function(users,_){
     mongoose.Promise = global.Promise;
    mongoose.connect('mongodb://localhost:27017/footballchat');
     //mongoose.connect('mongodb://localhost:27017/footballchat',{useMongoClient:true});
@@ -62,6 +62,8 @@ container.resolve(function(users){
         app.use(flash());
         app.use(passport.initialize());
         app.use(passport.session());
+        
+        app.locals._ = _ // allow the lodash to be use golbally in the project
     }
 });
 

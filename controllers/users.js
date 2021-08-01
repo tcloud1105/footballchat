@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function(_,passport){
+module.exports = function(_,passport,User){
     return{
         setRouting:function(router){
             router.get('/', this.indexPage);
@@ -8,7 +8,7 @@ module.exports = function(_,passport){
             router.get('/home',this.homePage)
             
             
-            router.post('/signup',this.postSignUp);
+            router.post('/signup',User.SignUpValidation,this.postSignUp);
         },
                        
         indexPage:function(req,res){
@@ -18,7 +18,8 @@ module.exports = function(_,passport){
              return res.render('home',{title:"HomePage"})
         },
         signUpPage:function(req,res){
-            return res.render('signup',{title:'Sign Up'})
+            const errors = req.flash('error')
+            return res.render('signup',{title:'FootballChat | Login', messages:errors,hasError:errors.length>0})
         },
         
         postSignUp:passport.authenticate('local.signup',{
