@@ -55,19 +55,22 @@
 <div id="main">
     <div class="main">
         <form action="/signup" method="post">
-
+            <h1>
+                <a href="#" class="btn-social btn-facebook">
+                     Test    
+                </a>
+            </h1>
             <h1>
                 Register
             </h1>
             
             <%if(hasError>0){%>
+            <% _.forEach(messages, function(error){%>
             <div class="alert alert-danger text-center">
                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <% _.forEach(messages, function(error){%>
                    <%= error %><br/>
-                <%})%>
             </div>
-               
+               <%})%>
             <%}%>
 
             <div class="inset">

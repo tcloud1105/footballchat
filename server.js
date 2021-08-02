@@ -15,7 +15,7 @@ const container = require('./container');
 
 container.resolve(function(users,_){
     mongoose.Promise = global.Promise;
-   mongoose.connect('mongodb://localhost:27017/footballchat');
+   mongoose.connect('mongodb://localhost:27017/footballchat',{useNewUrlParser:true});
     //mongoose.connect('mongodb://localhost:27017/footballchat',{useMongoClient:true});
     
    const app = setUpExpress(); 
