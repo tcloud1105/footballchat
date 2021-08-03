@@ -7,7 +7,9 @@ module.exports = function(_,passport,User,validator){
             router.get('/signup', this.signUpPage);
             router.get('/home',this.homePage);
             router.get('/auth/facebook',this.getFacebookLogin);
-            router.get('/auth/facebook/callback',this.facebookLogin)
+            router.get('/auth/facebook/callback',this.facebookLogin);
+            router.get('/auth/google',this.getGoogleLogin);
+            router.get('/auth/google/callback',this.googleLogin)
             
            // router.post('/',User.LoginValidation, this.postLogin);
             //router.post('/signup',User.SignUpValidation,this.postSignUp);
@@ -50,6 +52,16 @@ module.exports = function(_,passport,User,validator){
             scope:'email'
         }),
         facebookLogin:passport.authenticate('facebook',{
+           successRedirect:'/home',
+            failureRedirect:'/signup',
+            failureFlash:true
+        }),
+         getGoogleLogin:passport.authenticate('google',{
+            //scope:['scope','email']
+             scope:['https://www.googleapis.com/auth/plus.login',
+                    'https://www.googleapis.com/auth/plus.profile.emails.read']
+        }),
+        googleLogin:passport.authenticate('google',{
            successRedirect:'/home',
             failureRedirect:'/signup',
             failureFlash:true
