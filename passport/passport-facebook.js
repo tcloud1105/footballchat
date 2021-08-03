@@ -22,7 +22,7 @@ passport.use(new FacebookStrategy({
     passRequestToCallback:true
 }, (req,token,refreshToken,profile,done)=>{
     
-      User.findOne({'facebook':profile.id}, (err,user)=>{
+      User.findOne({facebook:profile.id}, (err,user)=>{
           if(err){
               return done(err);
           }
@@ -34,7 +34,7 @@ passport.use(new FacebookStrategy({
              newUser.facebook = profile.id;
               newUser.fullname = profile.displayName;
               newUser.email = profile._json.email;
-              newUser.image = 'https://graph.facebook.com/'+profile.id+'/picture?type=large';
+              newUser.uerImage = 'https://graph.facebook.com/'+profile.id+'/picture?type=large';
               newUser.fbTokens.push({token:token});
           
           newUser.save((err)=>{
