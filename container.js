@@ -6,7 +6,7 @@ const simpleDependencies = [
     ['_','lodash'],
     ['passport','passport'],
     ['validator','express-validator'],
-    ['formidale','formidable']
+    ['formidable','formidable']
 ];
 
 
