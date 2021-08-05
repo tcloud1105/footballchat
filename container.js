@@ -5,7 +5,8 @@ const container = dependable.container();
 const simpleDependencies = [
     ['_','lodash'],
     ['passport','passport'],
-    ['validator','express-validator']
+    ['validator','express-validator'],
+    ['formidale','formidable']
 ];
 
 
