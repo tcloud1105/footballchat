@@ -8,9 +8,9 @@ module.exports = function(formidable, Club){
         setRouting:function(router){
             router.get('/dashboard',this.adminPage);
             
-            router.post('/uploadFile',this.uploadFile)
+            router.post('/uploadFile',this.uploadFile);
             //router.post('/uploadFile', aws.Upload.any(), this.uploadFile)
-            router.post('/dashboard', this.adminPostPage)
+            router.post('/dashboard', this.adminPostPage);
         },
         
         adminPage:function(req,res){
