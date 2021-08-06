@@ -6,7 +6,9 @@ const simpleDependencies = [
     ['_','lodash'],
     ['passport','passport'],
     ['validator','express-validator'],
-    ['formidable','formidable']
+    ['formidable','formidable'],
+    ['Club','./models/clubs'],
+    ['aws','./helpers/AWSUpload']
 ];
 
 
