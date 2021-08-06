@@ -2,7 +2,8 @@
 const path = require('path');
 const fs = require('fs');
 
-module.exports = function(formidable, Club, aws){
+//module.exports = function(formidable, Club, aws){
+module.exports = function(formidable, Club){
     return{
         setRouting:function(router){
             router.get('/dashboard',this.adminPage);
@@ -13,16 +14,17 @@ module.exports = function(formidable, Club, aws){
         },
         
         adminPage:function(req,res){
-            res.render('admin/dashboard',{title:'Admin DashBoard'})
+            res.render('admin/dashboard')
         },
         
         adminPostPage:function(req, res){
             const newClub = new Club();
             newClub.name = req.body.club;
             newClub.country = req.body.country;
-            newClub.image = req.body.image;
+            newClub.image = req.body.upload;
             
             newClub.save((err)=>{
+                if(err) throw err;
                 res.render('admin/dashboard');
             })
         },
