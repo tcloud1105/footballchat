@@ -7,6 +7,7 @@ const simpleDependencies = [
     ['passport','passport'],
     ['validator','express-validator'],
     ['formidable','formidable'],
+    ['async','async'],
     ['Club','./models/clubs'],
     ['aws','./helpers/AWSUpload']
 ];

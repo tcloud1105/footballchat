@@ -1,4 +1,4 @@
-module.exports = function(){
+module.exports = function(async, Club, _){
     return{
         setRouting:function(router){
             router.get('/home',this.homePage);
