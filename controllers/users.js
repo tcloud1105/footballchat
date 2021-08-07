@@ -5,7 +5,7 @@ module.exports = function(_,passport,User,validator){
         setRouting:function(router){
             router.get('/', this.indexPage);
             router.get('/signup', this.signUpPage);
-            router.get('/home',this.homePage);
+            
             router.get('/auth/facebook',this.getFacebookLogin);
             router.get('/auth/facebook/callback',this.facebookLogin);
             router.get('/auth/google',this.getGoogleLogin);
@@ -28,9 +28,7 @@ module.exports = function(_,passport,User,validator){
                 const errors = req.flash('error');
             return res.render('index',{title:'FootballChat | Login', messages:errors,hasError:errors.length>0})
         },
-        homePage:function(req,res){
-             return res.render('home',{title:"HomePage"})
-        },
+        
         signUpPage:function(req,res){
             const errors = req.flash('error');
             return res.render('signup',{title:'FootballChat | Sign Up', messages:errors,hasError:errors.length>0})

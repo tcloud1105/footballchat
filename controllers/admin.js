@@ -25,7 +25,7 @@ module.exports = function(formidable, Club){
             
             newClub.save((err)=>{
                 if(err) throw err;
-                res.render('admin/dashboard');
+                return res.render('admin/dashboard');
             })
         },
         
