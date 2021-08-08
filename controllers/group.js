@@ -6,7 +6,7 @@ module.exports = function(formidable, Club){
         
         groupPage:function(req,res){
             const name = req.params.name;
-            res.render('groupChat/group',{title:"Football-Chat", name:name});
+            res.render('groupChat/group',{title:"Football-Chat", user:req.user,groupName:name});
         }
     }
     

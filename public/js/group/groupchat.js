@@ -1,7 +1,16 @@
 $(document).ready(function(){
     var socket = io();
+    
+    var room = $("#groupName").val();
     socket.on('connect', function(){
         console.log('Yeah! User connected');
+        
+        var params ={
+            room:room
+        }
+        socket.emit('join', params, function(){
+            console.log('User has joined this channel');
+        });
     })
     
     
@@ -10,8 +19,15 @@ $(document).ready(function(){
         var msg = $('#msg').val();
     
         socket.emit("createMessage", {
-            text:msg
+            text:msg,
+            room:room
+        }, function(){
+            $('#msg').val('');
         })
         
+    })
+    
+    socket.on("newMessage", function(data){
+        console.log(data);
     })
 })
