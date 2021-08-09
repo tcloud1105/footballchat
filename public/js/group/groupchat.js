@@ -1,6 +1,7 @@
 $(document).ready(function(){
     var socket = io();
     
+    var sender = $("#sender").val();
     var room = $("#groupName").val();
     socket.on('connect', function(){
         console.log('Yeah! User connected');
@@ -20,7 +21,8 @@ $(document).ready(function(){
     
         socket.emit("createMessage", {
             text:msg,
-            room:room
+            room:room,
+            from:sender
         }, function(){
             $('#msg').val('');
         })

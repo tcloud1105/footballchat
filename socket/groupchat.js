@@ -11,7 +11,8 @@ module.exports = function(io){
             console.log(data);
             io.to(data.room).emit("newMessage", {
                 text:data.text,
-                room:data.room
+                room:data.room,
+                from:data.from
             })
             
             callback();
