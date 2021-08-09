@@ -32,7 +32,7 @@ module.exports = function(async, Club, _){
                       dataChunk.push(res1.slice(i,i+chunkSize)); 
                   }
                   const countrySort = _.sortBy(res2, '_id');
-                  res.render('home',{title:"HomePage",data:dataChunk, countries:countrySort})
+                  res.render('home',{title:"HomePage",data:dataChunk, countries:countrySort, user:req.user})
               })
             
              
