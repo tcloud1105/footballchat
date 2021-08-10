@@ -1,4 +1,4 @@
-module.exports = function(formidable, Club){
+module.exports = function(Users){
     return{
         setRouting:function(router){
            router.get('/group/:name', this.groupPage);
