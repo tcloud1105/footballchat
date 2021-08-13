@@ -42,6 +42,7 @@ container.resolve(function(users,_,admin,home, group){
         admin.setRouting(router);
         home.setRouting(router);
         group.setRouting(router);
+        results.setRouting(router);
     
         app.use(router);
         
