@@ -12,7 +12,7 @@ class Users {
     }
     
     getUserId(id){
-        var getUser = this.users.filter((users)=>{
+        var getUser = this.globalRoom.filter((users)=>{
             return users.id == id;
         })[0];
         
@@ -22,7 +22,7 @@ class Users {
     removeUser(id){
        var user = this.getUserId(id);
         if(user){
-            this.users = this.users.filter((user)=> user.id!=id)
+            this.users = this.globalRoom.filter((user)=> user.id!=id)
         }
         
         return user;

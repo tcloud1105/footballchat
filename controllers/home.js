@@ -2,7 +2,9 @@ module.exports = function(async, Club, _, Users){
     return{
         setRouting:function(router){
             router.get('/home',this.homePage);
-            router.post('/home',this.homePostPage)
+            router.post('/home',this.homePostPage);
+            
+            router.get('/logout', this.logout)
         },
         
         homePostPage:function(req,res){
@@ -65,6 +67,13 @@ module.exports = function(async, Club, _, Users){
               })
             
              
+        },
+        
+        logout:function(req,res){
+            req.logout();
+            req.session.destroy((err)=>{
+                res.redirect('/');
+            })
         }
     }
 }

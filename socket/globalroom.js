@@ -12,5 +12,16 @@ module.exports = function(io, Global, _){
             
             io.to(global.room).emit('loggedInUser',arr)
         })
+        
+        socket.on('disconnect', ()=>{
+            var client = clients.removeUser(socket.id);
+            
+            if(client){
+                var userData = clients.getRoomList(client.room);
+                const arr = _.uniqBy(userData,'name');
+                const removeData = _.remove(arr, {'name':client.name})
+                io.to(client.room).emit('loggedInUser',arr)
+            }
+        })
     })
 }
