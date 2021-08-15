@@ -33,6 +33,23 @@ $(document).ready(function(){
         }
         
     })
+    
+    $('#send-message').on('click', function(){
+        var message = $('#msg').val();
+        
+        
+        $.ajax({
+            url:'/chat/'+paramOne,
+            type: 'POST',
+            data:{
+                message: message
+            },
+            
+            success:function(){
+                $('#msg').val('');
+            }
+        })
+    })
 })
 
 function swap(input, index1, index2){
