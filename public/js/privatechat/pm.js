@@ -5,7 +5,7 @@ $(document).ready(function(){
     var newParam = paramOne.split('.')
     
     var username = newParam[0];
-    $('#reveiver_name').text(username);
+    $('#reveiver_name').text('@'+username);
     swap(newParam,0,1);
     var paramTwo = newParam[0]+'.'+newParam[1]
     
