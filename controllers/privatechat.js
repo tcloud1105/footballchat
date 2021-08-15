@@ -1,4 +1,4 @@
-module.exports = function(async,Users){
+module.exports = function(async,Users, Message){
     return{
         setRouting:function(router){
             router.get('/chat/:name', this.getChatPage);
@@ -14,6 +14,26 @@ module.exports = function(async,Users){
                     if(req.body.message){
                         Users.findOne({'username':{$regex:nameRegex}}, (err, data)=>{
                             callback(err,data)
+                        })
+                    }
+                },
+                
+                function(data, callback){
+                    if(req.body.message){
+                        const newMessage = new Message();
+                        newMessage.sender = req.user._id;
+                        newMessage.receiver = data._id;
+                        newMessage.senderName = req.user.username;
+                        newMessage.receiverName = data.username;
+                        newMessage.message = req.body.message;
+                        newMessage.userImage = req.user.UserImage;
+                        newMessage.createdAt = new Date();
+                        
+                        newMessage.save((err)=>{
+                            if(err){
+                                next(err)
+                            }
+                            callback(err, result)
                         })
                     }
                 }
