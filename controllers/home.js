@@ -1,4 +1,4 @@
-module.exports = function(async, Club, _, Users, Message){
+module.exports = function(async, Club, _, Users, Message, FriendResult){
     return{
         setRouting:function(router){
             router.get('/home',this.homePage);
@@ -22,20 +22,12 @@ module.exports = function(async, Club, _, Users, Message){
                        callback(err,count)
                    })
                },
-               function(callback){
-                    if(req.body.chatId){
-                        Message.update({
-                            '_id':req.body.chatId
-                        },{
-                            "isRead":true
-                        },(err, done)=>{
-                            callback(err,done)
-                        })
-                    }
-                }
+              
            ], (err,results)=>{
                res.redirect('/home');
            }) 
+            
+            FriendResult.PostRequest(req,res,'/home')
         },
 
         homePage:function(req,res){

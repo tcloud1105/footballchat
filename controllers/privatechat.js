@@ -1,4 +1,4 @@
-module.exports = function(async,Users, Message){
+module.exports = function(async,Users, Message, FriendResult){
     return{
         setRouting:function(router){
             router.get('/chat/:name', this.getChatPage);
@@ -41,21 +41,7 @@ module.exports = function(async,Users, Message){
                 res.redirect('/chat/'+req.params.name)
             })
             
-            async.parallel([
-                function(callback){
-                    if(req.body.chatId){
-                        Message.update({
-                            '_id':req.body.chatId
-                        },{
-                            "isRead":true
-                        },(err, done)=>{
-                            callback(err,done)
-                        })
-                    }
-                }
-            ], (err, results)=>{
-                res.redirect('/chat/'+req.params.name)
-            })
+            FriendResult.PostRequest(req,result,'/chat/'+req.params.name)
         },
         
         getChatPage:function(req,res){
