@@ -1,4 +1,4 @@
-module.exports = function(async, Users){
+module.exports = function(async, Users, Message){
     return {
         PostRequest:function(req,res, url){
             async.parallel([
