@@ -7,8 +7,14 @@ module.exports = function(io){
             socket.join(pm.room2);
         })
         
-        socket.on('privateMessage', (message)=>{
+        socket.on('privateMessage', (message, callback)=>{
+            io.to(message.room).emit('new message', {
+                text: message.text,
+                sender: message.se
+            });
             
+            io.emit('message display',{});
+            callback()
         })
     })
 }

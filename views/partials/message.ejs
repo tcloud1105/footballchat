@@ -32,7 +32,7 @@
                <%if(chat.length>0){%>
                 <%_.forEach(chat, function(val){%>
                 <%if(user.username !== val.body.senderName){%>
-                <a href="/chat/<%= _.lowerCase(val.body.senderName)%>.<%= _.lowerCase(user.username)%>">
+                <a data-value="<%= val.body._id%>" id="messageLink" href="/chat/<%= _.lowerCase(val.body.senderName)%>.<%= _.lowerCase(user.username)%>">
                 <div class="row">
                     <div class="col-md-3">
                         <p class="text-center">
@@ -50,6 +50,7 @@
                                             <strong><%= val.body.senderName%></strong>
                                         <%}%>
                                     </p>
+                                     <input type="hidden" name="chatId" id="chatId" value="" value="<%= val.body._id%>"/>
                                     <%= val.body.message%>
                                 </div>
                             </div>
@@ -58,7 +59,7 @@
                 </div>
                 </a>
                 <%}else if(user.username === val.body.senderName){%>
-                 <a href="/chat/<%= _.lowerCase(val.body.receiverName)%>.<%= _.lowerCase(user.username)%>">
+                 <a data-value="<%= val.body._id%>" id="messageLink" href="/chat/<%= _.lowerCase(val.body.receiverName)%>.<%= _.lowerCase(user.username)%>">
                 <div class="row">
                     <div class="col-md-3">
                         <p class="text-center">
@@ -76,6 +77,7 @@
                                             <strong><%= val.body.senderName%></strong>
                                         <%}%>
                                     </p>
+                                    <input type="hidden" name="chatId" id="chatId" value="" value="<%= val.body._id%>"/>
                                     <%= val.body.message%>
                                 </div>
                             </div>

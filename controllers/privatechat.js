@@ -40,6 +40,22 @@ module.exports = function(async,Users, Message){
             ], (err, results)=>{
                 res.redirect('/chat/'+req.params.name)
             })
+            
+            async.parallel([
+                function(callback){
+                    if(req.body.chatId){
+                        Message.update({
+                            '_id':req.body.chatId
+                        },{
+                            "isRead":true
+                        },(err, done)=>{
+                            callback(err,done)
+                        })
+                    }
+                }
+            ], (err, results)=>{
+                res.redirect('/chat/'+req.params.name)
+            })
         },
         
         getChatPage:function(req,res){
@@ -84,10 +100,21 @@ module.exports = function(async,Users, Message){
                     )
                 },
                 
+                  function(callback){
+                      Message.find({'$or':[{'senderName':req.user.username},{'receiverName':req.user.username}]}).populate('sender')
+                  .populate('receiver')
+                  .exec((err,result3)=>{
+                          callback(err,result3)
+                      })}
                ],(err,results)=>{
                  const result1 = results[0];
+                  const result2 = results[1];
+                  const result3 = results[2];
+                  
+                  const params = req.params.name.split('.');
+                  const nameParams = params[0];
                 
-                res.render('private/privatechat',{title:'FootballChat - Private Chat', user:req.user,data:result1});
+                res.render('private/privatechat',{title:'FootballChat - Private Chat', user:req.user,data:result1, chat:result2, chats:result3, name:nameParams});
                });
         }
     }

@@ -16,6 +16,9 @@ $(document).ready(function(){
         }
         
         socket.emit('join PM', params)
+        socket.on('message display', function(){
+            $('#reload').load(location.href+' #reload');
+        })
     })
     
      $('#message_form').on('submit', function(e){
