@@ -1,4 +1,4 @@
-module.exports = function(Users, async, FriendResult){
+module.exports = function(Users, async, FriendResult, Group){
     return{
         setRouting:function(router){
            router.get('/group/:name', this.groupPage);
@@ -59,7 +59,26 @@ module.exports = function(Users, async, FriendResult){
         },
         
         groupPostPage: function(req,res){
+            FriendResult.PostRequest(req, res,'/group/'+req.params.name);
             
+            async.parallel([
+                function(callback){
+                    if(req.body.message){
+                        const group = new Group();
+                        
+                        group.sender = req.user._id;
+                        group.body = req.body.message;
+                        group.name = req.body.groupName; 
+                        group.createdAt = new Date(); 
+                        
+                        group.save((err, msg)=>{
+                            callback(err,msg)
+                        })
+                    }
+                }
+            ], (err, results)=>{
+                res.redirect('/group/'+req.params.name)
+            })
         },
       logout:function(req,res){
             req.logout();
