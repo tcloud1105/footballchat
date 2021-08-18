@@ -1,4 +1,4 @@
-module.exports = function(async, Club, _, Users){
+module.exports = function(async, Club, _, Users, Message){
     return{
         setRouting:function(router){
             router.get('/home',this.homePage);
@@ -21,7 +21,18 @@ module.exports = function(async, Club, _, Users){
                    }, (err,count)=>{
                        callback(err,count)
                    })
-               }
+               },
+               function(callback){
+                    if(req.body.chatId){
+                        Message.update({
+                            '_id':req.body.chatId
+                        },{
+                            "isRead":true
+                        },(err, done)=>{
+                            callback(err,done)
+                        })
+                    }
+                }
            ], (err,results)=>{
                res.redirect('/home');
            }) 
@@ -45,6 +56,39 @@ module.exports = function(async, Club, _, Users){
                       }]);
                   },
                   
+                  function(callback){
+                    const nameRegex = new RegExp("^" + req.user.username.toLowerCase(), "i")
+                    Message.aggregate(
+                        {$match:{$or:[{"senderName":nameRegex}, {"receiverName":nameRegex}]}},
+                        {$sort:{"createdAt":-1}},
+                        {
+                            $group:{"_id":{
+                            "last_message_between":{
+                                $cond:[
+                                    {
+                                        $gt:[
+                                        {$substr:["$senderName",0,1]},
+                                        {$substr:["$receiverName",0,1]}]
+                                    },
+                                    {$concat:["$senderName"," and ","$receiverName"]},
+                                    {$concat:["$receiverName"," and ","$senderName"]}
+                                ]
+                            }
+                            }, "body": {$first:"$$ROOT"}
+                            }
+                        }, function(err, newResult){
+                            const arr = [
+                                {path: 'body.sender', model: 'User'},
+                                {path: 'body.receiver', model: 'User'}
+                            ];
+                            
+                            Message.populate(newResult, arr, (err, newResult1) => {
+                                callback(err, newResult1);
+                            });
+                        }
+                    )
+                },
+                 function(callback){ 
                   Users.findOne({'username':req.user.username})
                          .populate('request.userId')
                          .exec((err, result)=>{
@@ -55,6 +99,7 @@ module.exports = function(async, Club, _, Users){
                   const res1 = results[0];
                   const res2 = results[1];
                   const res3 = results[2];
+                  const res4 = results[3];
                   
                   const dataChunk = [];
                   const chunkSize = 3;
@@ -63,7 +108,7 @@ module.exports = function(async, Club, _, Users){
                       dataChunk.push(res1.slice(i,i+chunkSize)); 
                   }
                   const countrySort = _.sortBy(res2, '_id');
-                  res.render('home',{title:"HomePage",chunks:dataChunk, countries:countrySort, user:req.user,data:res3})
+                  res.render('home',{title:"HomePage",chunks:dataChunk, countries:countrySort, user:req.user,data:res3, chat:res4})
               })
             
              

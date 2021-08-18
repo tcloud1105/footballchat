@@ -16,6 +16,11 @@ $(document).ready(function(){
         }
         
         socket.emit('join PM', params)
+        
+        socket.on('new refresh', ()=>{
+            $('#reload').load(location.href+' #reload');
+        })
+        
         socket.on('message display', function(){
             $('#reload').load(location.href+' #reload');
         })
@@ -32,5 +37,15 @@ $(document).ready(function(){
                 
             }
         })
+       
+        socket.emit('refresh', {})
+       
     })
 })
+
+
+function swap(input, index1, index2){
+    var temp = input[index1]
+    input[index1] = input[index2]
+    input[index2] = temp
+}
