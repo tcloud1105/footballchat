@@ -15,7 +15,7 @@ const {Global} = require('./helpers/Global')
 
 const container = require('./container');
 
-container.resolve(function(users,_,admin,home, group, privatechat){
+container.resolve(function(users,_,admin,home, group, privatechat, profile){
     mongoose.Promise = global.Promise;
    mongoose.connect('mongodb://localhost:27017/footballchat',{useNewUrlParser:true});
     //mongoose.connect('mongodb://localhost:27017/footballchat',{useMongoClient:true});
@@ -45,6 +45,7 @@ container.resolve(function(users,_,admin,home, group, privatechat){
         group.setRouting(router);
         results.setRouting(router);
         privatechat.setRouting(router);
+        profile.setRouting(router);
     
         app.use(router);
         
