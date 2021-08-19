@@ -108,17 +108,19 @@
 
                             <div class="chat_area">
                                 <ul id="messages" class="list-unstyled">
-<!--
+                                  <%_.forEach(groupMsg, function(val){%>
+                                <% if(groupName === val.name){%>
                                   <li class="left">
                                      <span class="chat-img1 pull-left">
                                          <img src="http://placehold.it/300x300" class="img-circle" alt=""/> 
                                      </span> 
                                       <div class="chat-body1">
-                                         <span class="chat-name">Username</span><br/>
-                                          Message Body
+                                         <span class="chat-name"><%= val.sender.username%></span><br/>
+                                          <%= val.body%>
                                       </div>
                                   </li>
--->
+                                    <%}%>
+                                    <%})%>
                                 </ul>
                                 
                                 <script id="message-template" type="text/template">
@@ -136,7 +138,7 @@
 
                             <div class="message_write">
                               <form id="message_form" method="post">
-
+                                  <input type="hidden" name="groupName" id="groupName" value="<%= groupName%>"/>
                                   <textarea class="form-control" name="message" id="msg" placeholder="Type a message"></textarea>
                                   <div class="clearfix"></div>
                                   <div class="chat_bottom">

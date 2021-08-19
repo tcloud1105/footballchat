@@ -51,7 +51,7 @@ $(document).ready(function(){
             type: 'POST', 
             data:{
                 message:msg,
-                group:room
+                groupName:room
             },
             success:function(){
                 $('#msg').val('');

@@ -49,12 +49,21 @@ module.exports = function(Users, async, FriendResult, Group){
                             });
                         }
                     )
+                },
+                
+                function(callback){
+                    Group.find({})
+                         .populate('sender')
+                         .exec((err, result)=>{
+                        callback(err, result)
+                    })
                 }
                ],(err,results)=>{
                  const result1 = results[0];
                 const result2 = results[1];
+                const result3 = results[2];
                 
-                res.render('groupChat/group',{title:"Football-Chat", user:req.user,groupName:name, data:result1, chat:result2});
+                res.render('groupChat/group',{title:"Football-Chat", user:req.user,groupName:name, data:result1, chat:result2, groupMsg:result3});
                });
         },
         
