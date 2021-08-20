@@ -32,7 +32,8 @@ $(document).ready(function(){
         var country = $('#country').val();
         var gender = $('#gender').val();
         var mantra = $('#mantra').val();
-        var userImage = $('#add-input').val();
+        var upload = $('#add-input').val();
+        var image = $('#user-image').val();
         
         var valid = true;
         
