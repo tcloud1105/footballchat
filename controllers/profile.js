@@ -1,9 +1,19 @@
-module.exports = function(async, Users, Message){
+module.exports = function(async, Users, Message,aws, formidable){
     return{
         setRouting:function(router){
-            router.get('/settings/profile', this.getProfilePage)
+            router.get('/settings/profile', this.getProfilePage);
+            
+            router.post('/userupload', aws.Upload.any(), this.userUpload)
         },
-        
+        userUpload:function(req, res){
+          const form = new formidable.IncomingForm();
+            
+            form.on('file', (field, file)=>{})            
+            form.on('error', (err)=>{})
+            form.on('end', ()=>{})
+            form.parse(req)
+            
+        },
         getProfilePage: function(req,res){
              async.parallel([
                 function(callback){
