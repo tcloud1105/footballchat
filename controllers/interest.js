@@ -6,53 +6,27 @@ module.exports = function(async, Users, Message, FriendResult){
             router.post('/settings/interests', this.postInterestPage)
         },
         postInterestPage: function(req,res){
-             FriendResult.PostRequest(req, res,'/settings/profile');
+             FriendResult.PostRequest(req, res,'/settings/interests');
             
-                        async.waterfall([
+            async.parallel([
                 function(callback){
-                    Users.findOne({'_id':req.user._id}, (err, result) => {
-                        callback(err, result);
-                    })
-                },
-                
-                function(result, callback){
-                    if(req.body.upload === null || req.body.upload === ''){
+                   if(req.body.favClub){
                         Users.update({
-                            '_id':req.user._id
-                        },
-                        {
-                            username: req.body.username,
-                            fullname: req.body.fullname,
-                            mantra: req.body.mantra,
-                            gender: req.body.gender,
-                            country: req.body.country,
-                            userImage: result.userImage
-                        },
-                        {
-                            upsert: true
-                        }, (err, result) => {
-                            res.redirect('/settings/profile');
+                            '_id': req.user._id,
+                            'favClub.clubName': {$ne: req.body.favClub}
+                        },{
+                            $push: {favClub: {
+                                clubName: req.body.favClub
+                            }}
+                        }, (err, result1)=>{
+                            callback(err,result1)
                         })
-                    } else if(req.body.upload !== null || req.body.upload !== ''){
-                        Users.update({
-                            '_id':req.user._id
-                        },
-                        {
-                            username: req.body.username,
-                            fullname: req.body.fullname,
-                            mantra: req.body.mantra,
-                            gender: req.body.gender,
-                            country: req.body.country,
-                            userImage: req.body.upload
-                        },
-                        {
-                            upsert: true
-                        }, (err, result) => {
-                            res.redirect('/settings/profile');
-                        })
-                    }
+                   }
+                   
                 }
-            ]);
+            ], (err, results)=>{
+                res.redirect('/settings/interests')
+            });
         },
         
         getInterestPage: function(req,res){
