@@ -3,9 +3,9 @@ module.exports = function(async, Users, Message, FriendResult){
         setRouting:function(router){
             router.get('/settings/interests', this.getInterestPage);
             
-            router.post('/settings/profile', this.postProfilePage)
+            router.post('/settings/interests', this.postInterestPage)
         },
-        postProfilePage: function(req,res){
+        postInterestPage: function(req,res){
              FriendResult.PostRequest(req, res,'/settings/profile');
             
                         async.waterfall([
