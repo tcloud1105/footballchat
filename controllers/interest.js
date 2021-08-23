@@ -50,6 +50,27 @@ module.exports = function(async, Users, Message, FriendResult){
             ], (err, results)=>{
                 res.redirect('/settings/interests')
             });
+            
+            async.parallel([
+                function(callback){
+                   if(req.body.favTeam){
+                        Users.update({
+                            '_id': req.user._id,
+                            'favNationalTeam.teamName': {$ne: req.body.favTeam}
+                        },{
+                            $push: {favNationalTeam: {
+                                teanName: req.body.favTeam
+                            }}
+                        }, (err, result3)=>{
+                            callback(err,result3)
+                        })
+                   }
+                   
+                }  
+               
+            ], (err, results)=>{
+                res.redirect('/settings/interests')
+            });
         },
          
         getInterestPage: function(req,res){

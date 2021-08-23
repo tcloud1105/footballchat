@@ -131,9 +131,11 @@
 
                                     <h3 class="user-display-head" style="color:#4aa1f3 !important">Favourite National Teams</h3>
                                     <hr />
+                                    <%_.forEach(user.favNationalTeam, function(val){%>
                                     <p style="margin-bottom:30px;">
-                                        <span class="glyphicon glyphicon-check"></span>
+                                        <span class="glyphicon glyphicon-check"></span><%= val.teamName%>
                                     </p>
+                                    <%})%>
 
                                     <div class="form-group ad-30" style="margin-top:18px;">
                                         <div class="input-group">
