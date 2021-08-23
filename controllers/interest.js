@@ -23,12 +23,35 @@ module.exports = function(async, Users, Message, FriendResult){
                         })
                    }
                    
-                }
+                },
+                
+               
+            ], (err, results)=>{
+                res.redirect('/settings/interests')
+            });
+            
+            async.parallel([
+                function(callback){
+                   if(req.body.favPlayer){
+                        Users.update({
+                            '_id': req.user._id,
+                            'favPlayer.playerName': {$ne: req.body.favClub}
+                        },{
+                            $push: {favPlayer: {
+                                playerName: req.body.favPlayer
+                            }}
+                        }, (err, result2)=>{
+                            callback(err,result2)
+                        })
+                   }
+                   
+                }  
+               
             ], (err, results)=>{
                 res.redirect('/settings/interests')
             });
         },
-        
+         
         getInterestPage: function(req,res){
              async.parallel([
                 function(callback){
