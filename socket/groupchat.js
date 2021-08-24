@@ -18,7 +18,8 @@ module.exports = function(io, Users){
             io.to(data.room).emit("newMessage", {
                 text:data.text,
                 room:data.room,
-                from:data.from
+                from:data.from,
+                image: data.userPic
             })
             
             callback();

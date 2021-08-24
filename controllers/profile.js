@@ -6,6 +6,11 @@ module.exports = function(async, Users, Message,aws, formidable, FriendResult){
             
             router.post('/userupload', aws.Upload.any(), this.userUpload);
             router.post('/settings/profile', this.postProfilePage)
+            router.post('/profile/:name', this.postOverviewPage)
+        },
+        
+        postOverviewPage: function(req, res){
+             FriendResult.PostRequest(req, res,'/profile/'+req.params.name);
         },
         
         overviewPage: function(req, res){
