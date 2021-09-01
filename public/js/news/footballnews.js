@@ -1,16 +1,18 @@
 $(document).ready(function(){
-    return GetResult()
-})
+    LoadData('.paginate');
+    return GetResult(); 
+});
 
 function GetResult(){
     $.ajax({
-        url:"https://content.guardianapis.com/football?page-size=10&order-by=newest&show-fields=all&api-key=462f104e-dda3-49b4-845e-e0626b5b99ee",
-        type:"GET",
-        dataType:'json',
-        success:function(data){
-            var results ='';
+        url: 'http://content.guardianapis.com/football?page-size=50&order-by=newest&show-fields=all&api-key=8b435306-1b3a-480d-b96d-32b7d969507a',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data){
+            var results = '';
+            
             $.each(data.response.results, function(i){
-               results += '<form class="paginate">';
+                results += '<form class="paginate">';
                 results += '<div class="col-md-12 news-post">';
                 results += '<div class="row">';
                 
@@ -29,9 +31,37 @@ function GetResult(){
                 results += '</a>';
                 results += '</div>';
                 results += '</div>';
-                results += '</form>'; 
+                results += '</form>';
             });
+            
+            $('#newsResults').html(results);
+            $('.paginate').slice(0, 2).show();
         }
-        $('#newsResults').html(results);
     })
 }
+
+function LoadData(divClass){
+    $('#loadMore').on('click', function(e){
+        e.preventDefault();
+        
+        $(divClass+":hidden").slice(0, 3).slideDown();
+        
+        $('html, body').animate({
+            scrollTop: $(this).offset().top
+        }, 2000);
+    });
+    
+    $('#linkTop').click(function(){
+        $('html, body').animate({
+            scrollTop: 0
+        }, 500);
+    });
+}
+
+
+
+
+
+
+
+
