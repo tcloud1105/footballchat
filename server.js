@@ -12,6 +12,8 @@ const passport = require('passport');
 const socketIO = require('socket.io');
 const {Users} = require('./helpers/UserClass')
 const {Global} = require('./helpers/Global')
+const compression = require('compression')
+const helmet = require('helmet')
 
 const container = require('./container');
 
@@ -57,6 +59,8 @@ container.resolve(function(users,_,admin,home, group, privatechat, profile, inte
     
     
     function configureExpress(app){
+        app.use(compression())
+        app.use(helmet())
         require('./passport/passport-local')
         require('./passport/passport-facebook')
         require('./passport/passport-google')
